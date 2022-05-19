@@ -44,8 +44,8 @@ end
 
 
 function scf!(hf::HF, ham::Hamiltonian;
-              dm0=nothing, iterations::Int=100, dmconv=1e-8,
-              damping::Float64=0.0, diis_dim::Int=8, diis_start_cycle::Int=1)
+              dm0=nothing, iterations::Int=100, dmconv::Float64=1e-8,
+              damping::Float64=0.0, diis_dim::Int=8, diis_start::Int=1)
 
     if dm0 === nothing
         if hf.mo_coeff === nothing
@@ -79,7 +79,7 @@ function scf!(hf::HF, ham::Hamiltonian;
 
     result = nlsolve(residual!, dm0;
                      method=:anderson, iterations=iterations, ftol=dmconv,
-                     beta=1.0-damping, m=diis_dim, aa_start=diis_start_cycle,
+                     beta=1.0-damping, m=diis_dim, aa_start=diis_start,
                      show_trace=true)
 
     if result.f_converged
