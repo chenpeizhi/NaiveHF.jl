@@ -16,22 +16,28 @@ end
 
 
 """
-Neel initial guess for half-filling or hole-doped Hubbard,
-assuming both `nx` and `ny` are either even or 1.
+Neel initial guess for 2D Hubbard, assuming both `nx` and `ny` are either even or 1.
 """
 function neel_init(ham::Hubbard, nelec::Int)
 
     @assert ham.nx % 2 == 0 || ham.nx == 1
     @assert ham.ny % 2 == 0 || ham.ny == 1
     nmo = ham.nx * ham.ny
-    @assert nelec <= nmo
     nso = 2nmo
     occ = nelec / nso
     
     tmp = zeros(nso)
-    # I interlace the alpha and beta AOs in this GHF code.
-    tmp[1:4:end] .= occ
-    tmp[4:4:end] .= occ
+    if nelec <= nmo
+        # I interlace the alpha and beta AOs in this simple GHF code.
+        tmp[1:4:end] .= occ
+        tmp[4:4:end] .= occ
+    else
+        tmp[1:4:end] .= 1.0
+        tmp[4:4:end] .= 1.0
+        occ -= 1.0
+        tmp[3:4:end] .= occ
+        tmp[2:4:end] .= occ
+    end
     
     return diagm(tmp)
 end
