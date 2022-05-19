@@ -3,13 +3,13 @@ export HF
 
 mutable struct HF
     nelec::Int
-    energy::Float64
-    mo_energy::Union{Vector{Float64}, Nothing}
     # Assuming aufbau
     mo_coeff::Union{Matrix{Float64}, Nothing}
+    mo_energy::Union{Vector{Float64}, Nothing}
+    energy::Float64
     delta_energy::Float64
     # delta_dm::Float64
 end
 
-HF(nelec::Int) = HF(nelec, NaN, nothing, nothing, NaN)
+HF(nelec::Int) = HF(nelec, nothing, nothing, NaN, NaN)
 
