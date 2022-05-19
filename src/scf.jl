@@ -14,6 +14,10 @@ function buildfock!(fock::Matrix{Float64}, ham::Hamiltonian, dm::Matrix{Float64}
     return fock
 end
 
+# Later, we may implement `buildfock!(::Matrix{Float64}, ::Hubbard, ::Matrix{Float64})`
+# to take advantage of the sparsity of the Hubbard Hamiltonian.
+# This requires adding a `U` field to the `Hubbard` composite type.
+
 
 """
 Neel initial guess for 2D Hubbard, assuming both `nx` and `ny` are either even or 1.
