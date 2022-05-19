@@ -27,7 +27,7 @@ function neel_init(ham::Hubbard, nelec::Int)
     occ = nelec / nso
     
     tmp = zeros(nso)
-    if nelec <= nmo
+    @views if nelec <= nmo
         # I interlace the alpha and beta AOs in this simple GHF code.
         tmp[1:4:end] .= occ
         tmp[4:4:end] .= occ
